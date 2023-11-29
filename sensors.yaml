@@ -1,0 +1,15 @@
+# Integração Monitores do UNRAID
+- platform: netdata
+  host: IP
+  port: "19999"
+  name: NOMEDAINTEGRACAO
+  resources:
+    uptime:
+      data_group: system.uptime
+      element: uptime
+    disco_01_used:
+      data_group: disk_space._mnt_disk1
+      element: used
+    disco_03_used:
+      data_group: disk_space._mnt_disk3
+      element: used
