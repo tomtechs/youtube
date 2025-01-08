@@ -1,0 +1,7 @@
+msg.payload = {
+    chatId: COLAR O ID AQUI,
+    type: 'message',
+    content: 'Envio de Mensagem de Teste ao Grupo Tom Tech'
+}
+
+return msg;
