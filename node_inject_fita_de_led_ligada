@@ -1,0 +1,20 @@
+// Obtém a data e hora atual
+let now = new Date();
+
+// Formata os componentes da data
+let hh = String(now.getHours()).padStart(2, '0'); // Horas com dois dígitos
+let mm = String(now.getMinutes()).padStart(2, '0'); // Minutos com dois dígitos
+let ss = String(now.getSeconds()).padStart(2, '0'); // Segundos com dois dígitos
+
+// Monta a string no formato hh:mm:ss
+let formattedDate = `${hh}:${mm}:${ss}`;
+
+// Define o payload com as informações do chat e a data/hora formatada
+msg.payload = {
+    chatId: <ID DO CHAT DO ENVIO DA MSG>,
+    type: 'message',
+    content: `[${formattedDate}] 🌈 A fita de led da mesa do estúdio foi ligada!`
+};
+
+// Retorna a mensagem
+return msg;
