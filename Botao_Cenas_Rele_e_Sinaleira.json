@@ -1,0 +1,788 @@
+[
+    {
+        "id": "03ce51862faf2156",
+        "type": "server-state-changed",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Botão de Cenas Púlpito",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.botao_cenas_placo_nave_action",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "82d5a20d8d04de4b",
+                "99f89fc76a9396a0",
+                "e6bb32e32b27b84b"
+            ]
+        ]
+    },
+    {
+        "id": "c5a4b2f64232fbc2",
+        "type": "api-call-service",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Ligar/Desligar Spots Batera",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [
+            "af6d662addd44e0b9938a3ba74898a0a"
+        ],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 720,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "82d5a20d8d04de4b",
+        "type": "switch",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Single Press",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1_single",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2_single",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3_single",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4_single",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "f2ed0fed7ae1f623"
+            ],
+            [
+                "324b56d4054e3eb2"
+            ],
+            [
+                "8ba5eb695849273a"
+            ],
+            [
+                "12831639e88db828"
+            ]
+        ]
+    },
+    {
+        "id": "99f89fc76a9396a0",
+        "type": "switch",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Double Press",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1_double",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2_double",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3_double",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4_double",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 440,
+        "y": 380,
+        "wires": [
+            [
+                "c5a4b2f64232fbc2"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f2ed0fed7ae1f623",
+        "type": "function",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "BT1S",
+        "func": "// Obtém a data e hora atual\nlet now = new Date();\n\n// Formata os componentes da data\nlet hh = String(now.getHours()).padStart(2, '0'); // Horas com dois dígitos\nlet mm = String(now.getMinutes()).padStart(2, '0'); // Minutos com dois dígitos\nlet ss = String(now.getSeconds()).padStart(2, '0'); // Segundos com dois dígitos\n\n// Monta a string no formato hh:mm:ss\nlet formattedDate = `${hh}:${mm}:${ss}`;\n\n// Define o payload com as informações do chat e a data/hora formatada\nmsg.payload = {\n    chatId: -1002452271163,\n    type: 'message',\n    content: `[${formattedDate}] 💧 Staff, preciso de água por favor!`\n};\n\n// Retorna a mensagem\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "9351f4f58013e0f0"
+            ]
+        ]
+    },
+    {
+        "id": "324b56d4054e3eb2",
+        "type": "function",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "BT2S",
+        "func": "// Obtém a data e hora atual\nlet now = new Date();\n\n// Formata os componentes da data\nlet hh = String(now.getHours()).padStart(2, '0'); // Horas com dois dígitos\nlet mm = String(now.getMinutes()).padStart(2, '0'); // Minutos com dois dígitos\nlet ss = String(now.getSeconds()).padStart(2, '0'); // Segundos com dois dígitos\n\n// Monta a string no formato hh:mm:ss\nlet formattedDate = `${hh}:${mm}:${ss}`;\n\n// Define o payload com as informações do chat e a data/hora formatada\nmsg.payload = {\n    chatId: -1002452271163,\n    type: 'message',\n    content: `[${formattedDate}] 🔻 Time do Som, abaixar meu retorno de palco.`\n};\n\n// Retorna a mensagem\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 180,
+        "wires": [
+            [
+                "8877bb0eeb1e7749"
+            ]
+        ]
+    },
+    {
+        "id": "12831639e88db828",
+        "type": "function",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "BT4S",
+        "func": "// Obtém a data e hora atual\nlet now = new Date();\n\n// Formata os componentes da data\nlet hh = String(now.getHours()).padStart(2, '0'); // Horas com dois dígitos\nlet mm = String(now.getMinutes()).padStart(2, '0'); // Minutos com dois dígitos\nlet ss = String(now.getSeconds()).padStart(2, '0'); // Segundos com dois dígitos\n\n// Monta a string no formato hh:mm:ss\nlet formattedDate = `${hh}:${mm}:${ss}`;\n\n// Define o payload com as informações do chat e a data/hora formatada\nmsg.payload = {\n    chatId: -1002452271163,\n    type: 'message',\n    content: `[${formattedDate}] 🔼 Time do Som, AUMENTAR meu retorno de palco.`\n};\n\n// Retorna a mensagem\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 260,
+        "wires": [
+            [
+                "24dc7e5d54dea621"
+            ]
+        ]
+    },
+    {
+        "id": "8ba5eb695849273a",
+        "type": "function",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "BT3S",
+        "func": "// Obtém a data e hora atual\nlet now = new Date();\n\n// Formata os componentes da data\nlet hh = String(now.getHours()).padStart(2, '0'); // Horas com dois dígitos\nlet mm = String(now.getMinutes()).padStart(2, '0'); // Minutos com dois dígitos\nlet ss = String(now.getSeconds()).padStart(2, '0'); // Segundos com dois dígitos\n\n// Monta a string no formato hh:mm:ss\nlet formattedDate = `${hh}:${mm}:${ss}`;\n\n// Define o payload com as informações do chat e a data/hora formatada\nmsg.payload = {\n    chatId: -1002452271163,\n    type: 'message',\n    content: `[${formattedDate}] 👧 Staff, as crianças estão fazendo muito barulho.`\n};\n\n// Retorna a mensagem\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 220,
+        "wires": [
+            [
+                "d18dcddde8ac4444"
+            ]
+        ]
+    },
+    {
+        "id": "e6bb32e32b27b84b",
+        "type": "debug",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6bd0f8a1769fd80b",
+        "type": "inject",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S1 Manual",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "318948bfb33c0780"
+            ]
+        ]
+    },
+    {
+        "id": "3c45d0eafdfba9b6",
+        "type": "inject",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S2 Manual",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "2b6ed67569e5b079"
+            ]
+        ]
+    },
+    {
+        "id": "8d5dc962ddc63656",
+        "type": "inject",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S3 Manual",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "938e87b7c94bdaa5"
+            ]
+        ]
+    },
+    {
+        "id": "08457ca1e88e24c7",
+        "type": "inject",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S4 Manual",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "90484cc141851c4a"
+            ]
+        ]
+    },
+    {
+        "id": "318948bfb33c0780",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S1 out",
+        "mode": "link",
+        "links": [
+            "f0b236594f3d22bb"
+        ],
+        "x": 225,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2b6ed67569e5b079",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S2 out",
+        "mode": "link",
+        "links": [
+            "4c476002dea301ea"
+        ],
+        "x": 225,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "938e87b7c94bdaa5",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S3 out",
+        "mode": "link",
+        "links": [
+            "dffe7ad6557e2438"
+        ],
+        "x": 225,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "90484cc141851c4a",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S4 out",
+        "mode": "link",
+        "links": [
+            "4dce1fd8ef85f180"
+        ],
+        "x": 225,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "f0b236594f3d22bb",
+        "type": "link in",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S1 IN",
+        "links": [
+            "318948bfb33c0780"
+        ],
+        "x": 575,
+        "y": 140,
+        "wires": [
+            [
+                "f2ed0fed7ae1f623"
+            ]
+        ]
+    },
+    {
+        "id": "4c476002dea301ea",
+        "type": "link in",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S2 IN",
+        "links": [
+            "2b6ed67569e5b079"
+        ],
+        "x": 575,
+        "y": 180,
+        "wires": [
+            [
+                "324b56d4054e3eb2"
+            ]
+        ]
+    },
+    {
+        "id": "dffe7ad6557e2438",
+        "type": "link in",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S3 IN",
+        "links": [
+            "938e87b7c94bdaa5"
+        ],
+        "x": 575,
+        "y": 220,
+        "wires": [
+            [
+                "8ba5eb695849273a"
+            ]
+        ]
+    },
+    {
+        "id": "4dce1fd8ef85f180",
+        "type": "link in",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S4 IN",
+        "links": [
+            "90484cc141851c4a"
+        ],
+        "x": 575,
+        "y": 260,
+        "wires": [
+            [
+                "12831639e88db828"
+            ]
+        ]
+    },
+    {
+        "id": "9351f4f58013e0f0",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S1 Out - Notify",
+        "mode": "link",
+        "links": [
+            "34048b20787ad2ce",
+            "4eb4e864b973a75f"
+        ],
+        "x": 975,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "11b1f0a7593d31a7",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S2 Out - Notify",
+        "mode": "link",
+        "links": [
+            "34048b20787ad2ce",
+            "4eb4e864b973a75f"
+        ],
+        "x": 975,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d18dcddde8ac4444",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S3 Out - Notify",
+        "mode": "link",
+        "links": [
+            "34048b20787ad2ce",
+            "4eb4e864b973a75f"
+        ],
+        "x": 975,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f4dfec1068679b94",
+        "type": "link out",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "S4 Out - Notify",
+        "mode": "link",
+        "links": [
+            "34048b20787ad2ce",
+            "4eb4e864b973a75f"
+        ],
+        "x": 975,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "8877bb0eeb1e7749",
+        "type": "api-call-service",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "L2 - Azul On",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.sinaleira_house_mix_l2"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 790,
+        "y": 180,
+        "wires": [
+            [
+                "11b1f0a7593d31a7",
+                "50145c6cebe7f727"
+            ]
+        ]
+    },
+    {
+        "id": "24dc7e5d54dea621",
+        "type": "api-call-service",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "L4 - Laranja On",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.sinaleira_house_mix_l4"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 800,
+        "y": 260,
+        "wires": [
+            [
+                "f4dfec1068679b94",
+                "700aa00f1a22b6dd"
+            ]
+        ]
+    },
+    {
+        "id": "700aa00f1a22b6dd",
+        "type": "delay",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "delay 10s",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1080,
+        "y": 260,
+        "wires": [
+            [
+                "d14bf0f3d3b2317f"
+            ]
+        ]
+    },
+    {
+        "id": "d14bf0f3d3b2317f",
+        "type": "api-call-service",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "L4 - Laranja Off",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.sinaleira_house_mix_l4"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1240,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50145c6cebe7f727",
+        "type": "delay",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "delay 10s",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1080,
+        "y": 180,
+        "wires": [
+            [
+                "b009b6f1ceaa191a"
+            ]
+        ]
+    },
+    {
+        "id": "b009b6f1ceaa191a",
+        "type": "api-call-service",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "L2 - Azul Off",
+        "server": "4f075be8a8b0e4d1",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.sinaleira_house_mix_l2"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1230,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "727136cd6e7f784c",
+        "type": "comment",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Botão de Cenas Púlpito + Sinaleira 4 Canais",
+        "info": "",
+        "x": 210,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "fcb31fe27d7eb127",
+        "type": "telegram sender",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "bot",
+        "bot": "78f51dad4da47cdd",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1330,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e887c2f2de81e8bc",
+        "type": "comment",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Envio ao Telegram - Grupo Staff",
+        "info": "",
+        "x": 1410,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4eb4e864b973a75f",
+        "type": "link in",
+        "z": "e7c0a9ba03df5a3b",
+        "name": "Nave Botão - IN",
+        "links": [
+            "11b1f0a7593d31a7",
+            "9351f4f58013e0f0",
+            "d18dcddde8ac4444",
+            "f4dfec1068679b94"
+        ],
+        "x": 1215,
+        "y": 440,
+        "wires": [
+            [
+                "fcb31fe27d7eb127"
+            ]
+        ]
+    },
+    {
+        "id": "4f075be8a8b0e4d1",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": "30",
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "default",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": false
+    },
+    {
+        "id": "78f51dad4da47cdd",
+        "type": "telegram bot",
+        "botname": "NOMEDOSEUBOT",
+        "usernames": "",
+        "chatids": "SEUCHATID",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "addressfamily": "",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]
