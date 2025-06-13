@@ -1,0 +1,20 @@
+Incluir ao configuration.yaml
+# Bot Telegram
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_bot_key
+    allowed_chat_ids:
+      - -xxxxxxxxxx
+
+# Serviço de notificação Telegram
+notify:
+  - platform: telegram
+    name: Telegram Home Assistant #nome que achar melhor
+    chat_id: -xxxxxxxxxx #aqui você coloca o chat_id
+
+Incluir ao secrets.yaml
+telegram_bot_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+Abaixo o JSON do Fluxo completo no Node-Red
+[{"id":"3aefe3855f93a1b1","type":"server-state-changed","z":"9c68ec4a05b73a1f","name":"Detectou pessoa?","server":"3d506219.d4c89e","version":6,"outputs":2,"exposeAsEntityConfig":"","entities":{"entity":["binary_sensor.poste_frente_casa_person"],"substring":[],"regex":[]},"outputInitially":false,"stateType":"str","ifState":"on","ifStateType":"str","ifStateOperator":"is","outputOnlyOnStateChange":true,"for":"0","forType":"num","forUnits":"minutes","ignorePrevStateNull":false,"ignorePrevStateUnknown":false,"ignorePrevStateUnavailable":false,"ignoreCurrentStateUnknown":false,"ignoreCurrentStateUnavailable":false,"outputProperties":[{"property":"payload","propertyType":"msg","value":"","valueType":"entityState"},{"property":"data","propertyType":"msg","value":"","valueType":"eventData"},{"property":"topic","propertyType":"msg","value":"","valueType":"triggerId"},{"property":"camera","propertyType":"msg","value":"camera da frente","valueType":"str"},{"property":"camera_file","propertyType":"msg","value":"camera_frente","valueType":"str"}],"x":150,"y":160,"wires":[["1bef95212bf4c8be"],[]]},{"id":"1bef95212bf4c8be","type":"function","z":"9c68ec4a05b73a1f","name":"function 4","func":"// Obtém a data e hora atual\nlet now = new Date();\n\n// Formata os componentes da data e hora\nlet dia = String(now.getDate()).padStart(2, '0');\nlet mes = String(now.getMonth() + 1).padStart(2, '0'); // Mês começa em 0\nlet ano = now.getFullYear();\n\nlet horas = String(now.getHours()).padStart(2, '0');\nlet minutos = String(now.getMinutes()).padStart(2, '0');\nlet segundos = String(now.getSeconds()).padStart(2, '0');\n\n// Monta a string no formato desejado\nlet dataHoraFormatada = `${dia}${mes}${ano}_${horas}${minutos}${segundos}`;\n\n// Define a saída da função\nmsg.payload_timestamp = dataHoraFormatada;\n\nreturn msg;","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":360,"y":140,"wires":[["9f2c011f5bc4e537"]]},{"id":"9f2c011f5bc4e537","type":"api-call-service","z":"9c68ec4a05b73a1f","name":"","server":"3d506219.d4c89e","version":7,"debugenabled":false,"action":"camera.snapshot","floorId":[],"areaId":[],"deviceId":[],"entityId":["camera.poste_frente_casa_snapshots_main"],"labelId":[],"data":"{\"filename\":\"/config/www/fotos/snap_{{ camera_file }}_{{ payload_timestamp }}.jpg\"}","dataType":"json","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","blockInputOverrides":true,"domain":"camera","service":"snapshot","x":570,"y":140,"wires":[["1f99beb15011d7bd"]]},{"id":"1f99beb15011d7bd","type":"api-call-service","z":"9c68ec4a05b73a1f","name":"","server":"3d506219.d4c89e","version":7,"debugenabled":false,"action":"telegram_bot.send_photo","floorId":[],"areaId":[],"deviceId":[],"entityId":[],"labelId":[],"data":"{\"authentication\":\"digest\",\"file\":\"/config/www/fotos/snap_{{ camera_file }}_{{ payload_timestamp }}.jpg\",\"caption\":\"📷 Atenção - O sistema de segurança detectou uma pessoa na {{camera}}, segue imagem:\"}","dataType":"json","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","blockInputOverrides":true,"domain":"telegram_bot","service":"send_photo","x":810,"y":140,"wires":[[]]},{"id":"ac08bcc1d9e3fdcc","type":"inject","z":"9c68ec4a05b73a1f","name":"","props":[{"p":"camera","v":"camera da frente","vt":"str"},{"p":"camera_file","v":"camera_frente","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":170,"y":120,"wires":[["1bef95212bf4c8be"]]},{"id":"3d506219.d4c89e","type":"server","name":"Home Assistant","addon":true}]
